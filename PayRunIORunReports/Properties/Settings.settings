@@ -1,7 +1,27 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PayRunIORunReports.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="TestUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://api.test.payrun.io/</Value>
+    </Setting>
+    <Setting Name="TestConsumerKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">9MaHMtmTUC6iMgymPl94g</Value>
+    </Setting>
+    <Setting Name="TestConsumerSecret" Type="System.String" Scope="User">
+      <Value Profile="(Default)">44sem3aVCUCxjaFmnolPQhPii7rQQwEyqgTnSJB655Q</Value>
+    </Setting>
+    <Setting Name="LiveUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://api.payrun.io/</Value>
+    </Setting>
+    <Setting Name="LiveConsumerKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">A1NQVtzi0yF7FO0KBX3PQ</Value>
+    </Setting>
+    <Setting Name="LiveConsumerSecret" Type="System.String" Scope="User">
+      <Value Profile="(Default)">X7QvDfQHpUGpXbDuERoUQP1qIbXuE5UuSlpIfTfVDZQ</Value>
+    </Setting>
+    <Setting Name="pdfReportFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M:\PayRunIO</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
