@@ -3,6 +3,7 @@
 
 #App.config file
 App.config
+
 # User-specific files
 *.suo
 *.user
