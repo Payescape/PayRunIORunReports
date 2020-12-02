@@ -4,6 +4,7 @@ using PayRunIO.CSharp.SDK;
 using DevExpress.XtraReports.UI;
 using System.Collections.Generic;
 using PayRunIOClassLibrary;
+using PayRunIOProcessReports;
 using System.Windows.Forms;
 namespace PayRunIORunReports
 {
@@ -170,7 +171,6 @@ namespace PayRunIORunReports
 
                 }
             }
-
             PayRunIOWebGlobeClass prWG = new PayRunIOWebGlobeClass();
             RPParameters rpParameters = prWG.GetRPParameters(xmlReport);
             RPEmployer rpEmployer = prWG.GetRPEmployer(xmlReport, rpParameters);
