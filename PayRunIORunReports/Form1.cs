@@ -4,8 +4,9 @@ using PayRunIO.CSharp.SDK;
 using DevExpress.XtraReports.UI;
 using System.Collections.Generic;
 using PayRunIOClassLibrary;
-using PayRunIOProcessReports;
 using System.Windows.Forms;
+using System.Reflection;
+
 namespace PayRunIORunReports
 {
     public partial class Form1 : DevExpress.XtraEditors.XtraForm
@@ -17,6 +18,7 @@ namespace PayRunIORunReports
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             txtTestUrl.Text = Properties.Settings.Default.TestUrl;
             txtTestConsumerKey.Text = Properties.Settings.Default.TestConsumerKey;
             txtTestConsumerSecret.Text = Properties.Settings.Default.TestConsumerSecret;
@@ -97,10 +99,16 @@ namespace PayRunIORunReports
             else
             {
                 if (comboBoxChooseReport.SelectedText == "Combined Payroll Run Report" ||
-                    comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report" ||
-                    comboBoxChooseReport.Text == "Note And Coin Requirement Report")
+                    comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report")
                 {
                     if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" | dateStartDate.Text == "" | dateEndDate.Text == "" | btnEditSavePDFReports.Text == "")
+                    {
+                        allEntered = false;
+                    }
+                }
+                else if(comboBoxChooseReport.Text == "Note And Coin Requirement Report")
+                {
+                    if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" | dateStartDate.Text == "" | btnEditSavePDFReports.Text == "")
                     {
                         allEntered = false;
                     }
@@ -122,42 +130,96 @@ namespace PayRunIORunReports
             string rptRef = null;
             string url = null;
             if (comboBoxChooseReport.Text == "Combined Payroll Run Report" || 
-                comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report" ||
-                comboBoxChooseReport.Text == "Note And Coin Requirement Report")
+                comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report")
             {
-                //I'm using the same PayRun.IO report for all 3 of these reports. I just need to sort the department with branch report differently.
+                //I'm using the same PayRun.IO report for these 2 reports. I just need to sort the department within branch report differently.
                 prm1 = "EmployerKey";
                 prm2 = "PayScheduleKey";
                 prm3 = "StartDate";
                 prm4 = "EndDate";
                 prm5 = "SortByBranch";
-                rptRef = "Combined Payroll Run Report";
+                rptRef = "PSCRN1";
 
                 if (comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report")
                 {
-                    sortByBranch = "true";
+                    sortByBranch = "True";
                 }
-                rptRef = rptRef.Replace(" ", "");
-                rptRef = rptRef.Replace("Report", "");
                 url = prm1 + "=" + txtEditParameter1.Text + "&"
                     + prm2 + "=" + comboBoxChooseFrequency.Text + "&"
                     + prm3 + "=" + startDate + "&"
                     + prm4 + "=" + endDate + "&"
                     + prm5 + "=" + sortByBranch;
             }
-            else if (comboBoxChooseReport.Text == "P32 Report")
+            else if (comboBoxChooseReport.Text == "Note And Coin Requirement Report")
             {
-                //I'll get these parameters from the database.
                 prm1 = "EmployerKey";
-                prm2 = "TaxYear";
-                rptRef = comboBoxChooseReport.SelectedText;
-                rptRef = rptRef.Replace(" ", "");
-                rptRef = rptRef.Replace("Report", "");
+                prm2 = "PayScheduleKey";
+                prm3 = "PaymentDate";
+                rptRef = "PSCOIN2";
                 url = prm1 + "=" + txtEditParameter1.Text + "&"
-                    + prm2 + "=" + txtEditParameter2.Text;
+                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"
+                    + prm3 + "=" + startDate;
             }
 
             XmlDocument xmlReport = null;
+            
+            xmlReport = GetXmlReport(rptRef, url);
+
+            CreatePDFReports(xmlReport);
+            
+            
+
+
+        }
+        private void CreatePDFReports(XmlDocument xmlReport)
+        {
+            PayRunIOWebGlobeClass prWG = new PayRunIOWebGlobeClass();
+            RPParameters rpParameters = prWG.GetRPParameters(xmlReport);
+            RPEmployer rpEmployer = prWG.GetRPEmployer(xmlReport, rpParameters);
+
+            RPSummaryPayRuns rpSummaryPayRuns = new RPSummaryPayRuns();
+
+            string reportName = null;
+            string assemblyName= "PayRunIOClassLibrary";
+            XtraReport xtraReport = new XtraReport();
+
+            if (comboBoxChooseReport.Text == "Combined Payroll Run Report")
+            {
+                
+                reportName = "NewCombinedPayrollRunReport";
+                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    
+                
+               
+            }
+            else if (comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report")
+            {
+                reportName = "NewCombinedPayrollRunReport";
+                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+
+                //string docName = btnEditSavePDFReports.Text + "//" + txtEditParameter1.Text + "_" + reportName + ".pdf";
+                //SavePDFReport(report1, docName);
+                ////Department Within Branch (DWB)
+                //reportCode = "DWBPRDR";
+                //rpSummaryPayRuns = CreatePayRunsDataSource(xmlReport, reportCode);
+
+
+                //CreateDWBPayrollRunPDFReport(rpSummaryPayRuns, rpParameters, rpEmployer);
+            }
+            else if (comboBoxChooseReport.Text == "Note And Coin Requirement Report")
+            {
+                reportName = "NoteAndCoinRequirementReport";
+                assemblyName = "PayRunIOClassLibrary";
+                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+
+                
+            }
+            string docName = btnEditSavePDFReports.Text + "//" + txtEditParameter1.Text + "_" + reportName + ".pdf";
+            SavePDFReport(xtraReport, docName);
+        }
+        private XmlDocument GetXmlReport(string rptRef, string url)
+        {
+            XmlDocument xmlReport = new XmlDocument();
 
             if (url != null)
             {
@@ -165,47 +227,35 @@ namespace PayRunIORunReports
                 try
                 {
                     xmlReport = apiHelper.GetRawXml("/Report/" + rptRef + "/run?" + url);
+
                 }
                 catch (Exception ex)
                 {
 
                 }
             }
-            PayRunIOWebGlobeClass prWG = new PayRunIOWebGlobeClass();
-            RPParameters rpParameters = prWG.GetRPParameters(xmlReport);
-            RPEmployer rpEmployer = prWG.GetRPEmployer(xmlReport, rpParameters);
 
-            RPSummaryPayRuns rpSummaryPayRuns = new RPSummaryPayRuns();
-            string reportCode;
+            return xmlReport;
+        }
+        private string GetTxtReport(string rptRef, string url)
+        {
+           string txtReport = null;
 
-            if (comboBoxChooseReport.Text == "Combined Payroll Run Report")
+            if (url != null)
             {
+                var apiHelper = ApiHelper();
+                try
+                {
+                    txtReport = apiHelper.GetRawText("/Report/" + rptRef + "/run?" + url);
 
-                reportCode="CPRR";
-                rpSummaryPayRuns = CreatePayRunsDataSource(xmlReport, reportCode);
+                }
+                catch (Exception ex)
+                {
 
-                
-                CreateCombinedPayrollRunPDFReport(rpSummaryPayRuns, rpParameters, rpEmployer);
-            }
-            else if (comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report")
-            {
-                //Department Within Branch (DWB)
-                reportCode="DWBPRDR";
-                rpSummaryPayRuns = CreatePayRunsDataSource(xmlReport, reportCode);
-
-
-                CreateDWBPayrollRunPDFReport(rpSummaryPayRuns, rpParameters, rpEmployer);
-            }
-            else if (comboBoxChooseReport.Text  == "Note And Coin Requirement Report")
-            {
-                reportCode="NACRR";
-                rpSummaryPayRuns = CreatePayRunsDataSource(xmlReport, reportCode);
-
-
-                CreateNoteAndCoinRequirementPDFReport(rpSummaryPayRuns, rpParameters, rpEmployer);
+                }
             }
 
-
+            return txtReport;
         }
         private RPSummaryPayRuns CreatePayRunsDataSource(XmlDocument xmlReport, string reportCode)
         {
@@ -419,7 +469,7 @@ namespace PayRunIORunReports
             {
                 report1.ShowDesigner();
                 //report1.ShowPreview();
-
+                
             }
             else
             {
@@ -538,6 +588,38 @@ namespace PayRunIORunReports
                 //}
             }
         }
+        //public static XtraReport CreatePDFReport(XmlDocument xmlReport, string reportName, string assemblyName)
+        //{
+        //    //Load report
+        //    reportName = reportName + ".repx";
+        //    var reportLayout = ResourceHelper.ReadResourceFileToStream(
+        //        assemblyName, reportName);
+        //    XtraReport report1 = XtraReport.FromStream(reportLayout);
+        //    XmlReader xmlReader = new XmlNodeReader(xmlReport);
+        //    DataSet set = new DataSet();
+        //    set.ReadXml(xmlReader);
+
+        //    report1.DataSource = set;
+
+        //    return report1;
+        //}
+        private void SavePDFReport(XtraReport xtraReport, string docName)
+        {
+            // To show the report designer. You need to uncomment this to design the report.
+            bool designMode = false;
+            if (designMode)
+            {
+                xtraReport.ShowDesigner();
+                //report1.ShowPreview();
+
+            }
+            else
+            {
+                //Save the report in a pdf format
+                xtraReport.ExportToPdf(docName);
+
+            }
+        }
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
@@ -546,8 +628,7 @@ namespace PayRunIORunReports
         private void comboBoxChooseReport_SelectedValueChanged(object sender, EventArgs e)
         {
             if(comboBoxChooseReport.SelectedText=="Combined Payroll Run Report" || 
-               comboBoxChooseReport.SelectedText == "Department Within Branch Payroll Run Details Report" ||
-               comboBoxChooseReport.SelectedText == "Note And Coin Requirement Report")
+               comboBoxChooseReport.SelectedText == "Department Within Branch Payroll Run Details Report")
             {
                 //I'll these from the database
                 txtEditParameter1.Visible = true;
@@ -564,23 +645,19 @@ namespace PayRunIORunReports
                 lblParameter4.Visible = true;
                 
             }
-            else if (comboBoxChooseReport.SelectedText == "Something else")
+            else if (comboBoxChooseReport.SelectedText == "Note And Coin Requirement Report")
             {
                 //I'll these from the database
                 txtEditParameter1.Visible = true;
                 comboBoxChooseFrequency.Visible = true;
                 dateStartDate.Visible = true;
-                dateEndDate.Visible = true;
                 lblParameter1.Text = "Enter employer Number in the form nnnn.";
                 lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
-                lblParameter3.Text = "Enter start date.";
-                lblParameter4.Text = "Enter end date.";
+                lblParameter3.Text = "Enter payment date.";
                 lblParameter1.Visible = true;
                 lblParameter2.Visible = true;
                 lblParameter3.Visible = true;
-                lblParameter4.Visible = true;
                 
-
             }
         }
         
