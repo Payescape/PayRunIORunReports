@@ -188,15 +188,15 @@ namespace PayRunIORunReports
                 
                 reportName = "NewCombinedPayrollRunReport";
                 xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
-                    
-                
-               
+                reportName = "CombinedPayrollRunReport";
+
+
             }
             else if (comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report")
             {
                 reportName = "NewCombinedPayrollRunReport";
                 xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
-
+                reportName = "DepartmentWithinBranchPayrollRunDetailsReport";
                 //string docName = btnEditSavePDFReports.Text + "//" + txtEditParameter1.Text + "_" + reportName + ".pdf";
                 //SavePDFReport(report1, docName);
                 ////Department Within Branch (DWB)
@@ -588,21 +588,6 @@ namespace PayRunIORunReports
                 //}
             }
         }
-        //public static XtraReport CreatePDFReport(XmlDocument xmlReport, string reportName, string assemblyName)
-        //{
-        //    //Load report
-        //    reportName = reportName + ".repx";
-        //    var reportLayout = ResourceHelper.ReadResourceFileToStream(
-        //        assemblyName, reportName);
-        //    XtraReport report1 = XtraReport.FromStream(reportLayout);
-        //    XmlReader xmlReader = new XmlNodeReader(xmlReport);
-        //    DataSet set = new DataSet();
-        //    set.ReadXml(xmlReader);
-
-        //    report1.DataSource = set;
-
-        //    return report1;
-        //}
         private void SavePDFReport(XtraReport xtraReport, string docName)
         {
             // To show the report designer. You need to uncomment this to design the report.
