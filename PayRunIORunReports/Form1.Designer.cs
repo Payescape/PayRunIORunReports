@@ -103,7 +103,9 @@
             this.comboBoxChooseReport.Properties.Items.AddRange(new object[] {
             "Combined Payroll Run Report",
             "Department Within Branch Payroll Run Details Report",
-            "Note And Coin Requirement Report"});
+            "Note And Coin Requirement Report",
+            "Pension Contributions To Date Report",
+            "PAPDIS Report"});
             this.comboBoxChooseReport.Size = new System.Drawing.Size(482, 20);
             this.comboBoxChooseReport.TabIndex = 1;
             this.comboBoxChooseReport.SelectedValueChanged += new System.EventHandler(this.comboBoxChooseReport_SelectedValueChanged);
