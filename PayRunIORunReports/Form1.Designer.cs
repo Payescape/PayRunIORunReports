@@ -105,7 +105,9 @@
             "Department Within Branch Payroll Run Details Report",
             "Note And Coin Requirement Report",
             "Pension Contributions To Date Report",
-            "PAPDIS Report"});
+            "PAPDIS Report",
+            "P11 Substitute",
+            "Pre Report"});
             this.comboBoxChooseReport.Size = new System.Drawing.Size(482, 20);
             this.comboBoxChooseReport.TabIndex = 1;
             this.comboBoxChooseReport.SelectedValueChanged += new System.EventHandler(this.comboBoxChooseReport_SelectedValueChanged);
@@ -144,7 +146,7 @@
             this.xtraTabMainForm.Controls.Add(this.labelControl1);
             this.xtraTabMainForm.Controls.Add(this.comboBoxChooseReport);
             this.xtraTabMainForm.Name = "xtraTabMainForm";
-            this.xtraTabMainForm.Size = new System.Drawing.Size(613, 297);
+            this.xtraTabMainForm.Size = new System.Drawing.Size(617, 300);
             this.xtraTabMainForm.Text = "Main form.";
             // 
             // dateEndDate
@@ -157,7 +159,7 @@
             this.dateEndDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.dateEndDate.Size = new System.Drawing.Size(482, 20);
-            this.dateEndDate.TabIndex = 10;
+            this.dateEndDate.TabIndex = 5;
             // 
             // dateStartDate
             // 
@@ -169,7 +171,7 @@
             this.dateStartDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.dateStartDate.Size = new System.Drawing.Size(482, 20);
-            this.dateStartDate.TabIndex = 9;
+            this.dateStartDate.TabIndex = 4;
             // 
             // comboBoxChooseFrequency
             // 
@@ -185,7 +187,7 @@
             "Quarterly",
             "Annually"});
             this.comboBoxChooseFrequency.Size = new System.Drawing.Size(482, 20);
-            this.comboBoxChooseFrequency.TabIndex = 8;
+            this.comboBoxChooseFrequency.TabIndex = 3;
             // 
             // lblParameter6
             // 
@@ -264,7 +266,7 @@
             // 
             // lblParameter1
             // 
-            this.lblParameter1.Location = new System.Drawing.Point(57, 64);
+            this.lblParameter1.Location = new System.Drawing.Point(57, 58);
             this.lblParameter1.Name = "lblParameter1";
             this.lblParameter1.Size = new System.Drawing.Size(92, 13);
             this.lblParameter1.TabIndex = 0;
@@ -272,7 +274,7 @@
             // 
             // txtEditParameter1
             // 
-            this.txtEditParameter1.Location = new System.Drawing.Point(57, 79);
+            this.txtEditParameter1.Location = new System.Drawing.Point(57, 75);
             this.txtEditParameter1.Name = "txtEditParameter1";
             this.txtEditParameter1.Size = new System.Drawing.Size(482, 20);
             this.txtEditParameter1.TabIndex = 2;
@@ -301,7 +303,7 @@
             this.xtraTabSettings.Controls.Add(this.txtTestConsumerKey);
             this.xtraTabSettings.Controls.Add(this.txtTestUrl);
             this.xtraTabSettings.Name = "xtraTabSettings";
-            this.xtraTabSettings.Size = new System.Drawing.Size(613, 297);
+            this.xtraTabSettings.Size = new System.Drawing.Size(617, 300);
             this.xtraTabSettings.Text = "Settings.";
             // 
             // separatorControl1
@@ -437,7 +439,7 @@
             this.chkUseLive.Location = new System.Drawing.Point(243, 491);
             this.chkUseLive.Name = "chkUseLive";
             this.chkUseLive.Properties.Caption = "Use live system.";
-            this.chkUseLive.Size = new System.Drawing.Size(105, 19);
+            this.chkUseLive.Size = new System.Drawing.Size(105, 20);
             this.chkUseLive.TabIndex = 7;
             // 
             // lblSavePDFReports
