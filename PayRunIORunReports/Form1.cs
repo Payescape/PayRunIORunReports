@@ -103,6 +103,7 @@ namespace PayRunIORunReports
             }
             else
             {
+                //Employer number, frequency, start date, end date
                 if (comboBoxChooseReport.SelectedText == "Combined Payroll Run Report" ||
                     comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report" ||
                     comboBoxChooseReport.SelectedText == "Pension Contributions To Date Report" ||
@@ -113,6 +114,7 @@ namespace PayRunIORunReports
                         allEntered = false;
                     }
                 }
+                //Employer number, frequency, payment date
                 else if (comboBoxChooseReport.Text == "Note And Coin Requirement Report")
                 {
                     if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" || dateStartDate.Text == "" || btnEditSavePDFReports.Text == "")
@@ -120,14 +122,16 @@ namespace PayRunIORunReports
                         allEntered = false;
                     }
                 }
+                //Employer number, frequency, payment date, tax year, pension key
                 else if (comboBoxChooseReport.Text == "PAPDIS Report")
                 {
-                    if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" || dateStartDate.Text == "" || txtEditParameter5.Text == "" || btnEditSavePDFReports.Text == "")
+                    if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" || dateStartDate.Text == "" || txtEditParameter4.Text == "" || txtEditParameter5.Text == "" || btnEditSavePDFReports.Text == "")
                     {
                         allEntered = false;
                     }
                 }
-                else if (comboBoxChooseReport.Text == "P11 Substitute")
+                //Employer number, frequency, tax year
+                else if (comboBoxChooseReport.Text == "P11 Substitute" || comboBoxChooseReport.Text == "Apprenticeship Levy Report")
                 {
                     if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" || txtEditParameter3.Text == "" || btnEditSavePDFReports.Text == "")
                     {
@@ -203,7 +207,7 @@ namespace PayRunIORunReports
             }
             else if (comboBoxChooseReport.Text == "Pre Report")
             {
-                //PRE - Pre Report"
+                //PSPRE - Pre Report"
                 reportType = "xlsx";
                 prm1 = "EmployerKey";
                 prm2 = "PayScheduleKey";
@@ -223,6 +227,18 @@ namespace PayRunIORunReports
                 prm2 = "PayScheduleKey";
                 prm3 = "TaxYear";
                 rptRef = "PSP11";
+                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                    + prm3 + "=" + txtEditParameter3.Text;                          //Tax Year
+            }
+            else if (comboBoxChooseReport.Text == "Apprenticeship Levy Report")
+            {
+                //APPLEVYANNUAL - Apprenticeship Levy Report"
+                reportType = "xml";
+                prm1 = "EmployerKey";
+                prm2 = "PayScheduleKey";
+                prm3 = "TaxYear";
+                rptRef = "Jim-AppLevyAnnual";
                 url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
                     + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
                     + prm3 + "=" + txtEditParameter3.Text;                          //Tax Year
@@ -313,6 +329,12 @@ namespace PayRunIORunReports
             else if (comboBoxChooseReport.Text == "P11 Substitute")
             {
                 reportName = "P11Substitute";
+                assemblyName = "PayRunIOClassLibrary";
+                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+            }
+            else if (comboBoxChooseReport.Text == "Apprenticeship Levy Report")
+            {
+                reportName = "ApprenticeshipLevyReport";
                 assemblyName = "PayRunIOClassLibrary";
                 xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
             }
@@ -706,7 +728,9 @@ namespace PayRunIORunReports
             HideControls();
 
             if (comboBoxChooseReport.SelectedText=="Combined Payroll Run Report" || 
-               comboBoxChooseReport.SelectedText == "Department Within Branch Payroll Run Details Report")
+                comboBoxChooseReport.SelectedText == "Department Within Branch Payroll Run Details Report" ||
+                comboBoxChooseReport.SelectedText == "Pension Contributions To Date Report" ||
+                comboBoxChooseReport.SelectedText == "Pre Report")
             {
                 //I'll these from the database
                 txtEditParameter1.Visible = true;
@@ -736,39 +760,8 @@ namespace PayRunIORunReports
                 lblParameter3.Visible = true;
                 
             }
-            else if (comboBoxChooseReport.SelectedText == "Pension Contributions To Date Report")
-            {
-                txtEditParameter1.Visible = true;
-                comboBoxChooseFrequency.Visible = true;
-                dateStartDate.Visible = true;
-                dateEndDate.Visible = true;
-                lblParameter1.Text = "Enter employer Number in the form nnnn.";
-                lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
-                lblParameter3.Text = "Enter start date.";
-                lblParameter4.Text = "Enter end date.";
-                lblParameter1.Visible = true;
-                lblParameter2.Visible = true;
-                lblParameter3.Visible = true;
-                lblParameter4.Visible = true;
-
-            }
-            else if (comboBoxChooseReport.SelectedText == "Pre Report")
-            {
-                txtEditParameter1.Visible = true;
-                comboBoxChooseFrequency.Visible = true;
-                dateStartDate.Visible = true;
-                dateEndDate.Visible = true;
-                lblParameter1.Text = "Enter employer Number in the form nnnn.";
-                lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
-                lblParameter3.Text = "Enter start date.";
-                lblParameter4.Text = "Enter end date.";
-                lblParameter1.Visible = true;
-                lblParameter2.Visible = true;
-                lblParameter3.Visible = true;
-                lblParameter4.Visible = true;
-
-            }
-            else if (comboBoxChooseReport.SelectedText == "P11 Substitute")
+            else if (comboBoxChooseReport.SelectedText == "P11 Substitute" ||
+                     comboBoxChooseReport.SelectedText == "Apprenticeship Levy Report")
             {
                 txtEditParameter1.Visible = true;
                 comboBoxChooseFrequency.Visible = true;

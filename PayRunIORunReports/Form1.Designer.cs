@@ -107,7 +107,8 @@
             "Pension Contributions To Date Report",
             "PAPDIS Report",
             "P11 Substitute",
-            "Pre Report"});
+            "Pre Report",
+            "Apprenticeship Levy Report"});
             this.comboBoxChooseReport.Size = new System.Drawing.Size(482, 20);
             this.comboBoxChooseReport.TabIndex = 1;
             this.comboBoxChooseReport.SelectedValueChanged += new System.EventHandler(this.comboBoxChooseReport_SelectedValueChanged);
