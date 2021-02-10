@@ -123,7 +123,8 @@ namespace PayRunIORunReports
                     }
                 }
                 //Employer number, frequency, payment date, tax year, pension key
-                else if (comboBoxChooseReport.Text == "PAPDIS Report")
+                else if (comboBoxChooseReport.Text == "PAPDIS Report" ||
+                         comboBoxChooseReport.Text == "Royal London Pension Report")
                 {
                     if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" || dateStartDate.Text == "" || txtEditParameter4.Text == "" || txtEditParameter5.Text == "" || btnEditSavePDFReports.Text == "")
                     {
@@ -243,7 +244,7 @@ namespace PayRunIORunReports
                     + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
                     + prm3 + "=" + txtEditParameter3.Text;                          //Tax Year
             }
-            else //(comboBoxChooseReport.Text == "PAPDIS Report")
+            else if(comboBoxChooseReport.Text == "PAPDIS Report")
             {
                 //PAPDIS report
                 reportType = "txt";
@@ -260,6 +261,24 @@ namespace PayRunIORunReports
                     + prm4 + "=" + startDate + "&"                                  //Payment date
                     + prm5 + "=" + txtEditParameter5.Text + "&"                     //Pension key
                     + prm6 + "=" + "PAPDIS-CSV";                                    //Transform definition key
+            }
+            else //(comboBoxChooseReport.Text == "Royal London Pension Report")
+            {
+                //PAPDIS report
+                reportType = "txt";
+                prm1 = "EmployerKey";
+                prm2 = "PayScheduleKey";
+                prm3 = "TaxYear";
+                prm4 = "PaymentDate";
+                prm5 = "PensionKey";
+                prm6 = "TransformDefinitionKey";
+                rptRef = "PAPDIS";
+                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                    + prm3 + "=" + txtEditParameter4.Text + "&"                     //Tax Year
+                    + prm4 + "=" + startDate + "&"                                  //Payment date
+                    + prm5 + "=" + txtEditParameter5.Text + "&"                     //Pension key
+                    + prm6 + "=" + "RL-PENSION-CSV";                                //Transform definition key
             }
 
             if (reportType == "xml")
@@ -649,6 +668,10 @@ namespace PayRunIORunReports
             {
                 reportName = "PAPDISReport";
             }
+            else if (comboBoxChooseReport.Text == "Royal London Pension Report")
+            {
+                reportName = "RoyalLondonPensionReport";
+            }
            string docName = btnEditSavePDFReports.Text + "\\" + txtEditParameter1.Text + "_" + reportName + ".csv";
            SaveTxtReport(txtReport, docName);
         }
@@ -774,7 +797,8 @@ namespace PayRunIORunReports
                 lblParameter3.Visible = true;
                 
             }
-            else if (comboBoxChooseReport.SelectedText == "PAPDIS Report")
+            else if (comboBoxChooseReport.SelectedText == "PAPDIS Report" ||
+                     comboBoxChooseReport.SelectedText == "Royal London Pension Report")
             {
                txtEditParameter1.Visible = true;
                 comboBoxChooseFrequency.Visible = true;

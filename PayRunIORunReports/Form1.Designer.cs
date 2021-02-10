@@ -101,14 +101,15 @@
             this.comboBoxChooseReport.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.comboBoxChooseReport.Properties.Items.AddRange(new object[] {
+            "Apprenticeship Levy Report",
             "Combined Payroll Run Report",
             "Department Within Branch Payroll Run Details Report",
             "Note And Coin Requirement Report",
-            "Pension Contributions To Date Report",
-            "PAPDIS Report",
             "P11 Substitute",
+            "PAPDIS Report",
+            "Pension Contributions To Date Report",
             "Pre Report",
-            "Apprenticeship Levy Report"});
+            "Royal London Pension Report"});
             this.comboBoxChooseReport.Size = new System.Drawing.Size(482, 20);
             this.comboBoxChooseReport.TabIndex = 1;
             this.comboBoxChooseReport.SelectedValueChanged += new System.EventHandler(this.comboBoxChooseReport_SelectedValueChanged);
