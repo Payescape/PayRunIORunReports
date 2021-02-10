@@ -124,7 +124,8 @@ namespace PayRunIORunReports
                 }
                 //Employer number, frequency, payment date, tax year, pension key
                 else if (comboBoxChooseReport.Text == "PAPDIS Report" ||
-                         comboBoxChooseReport.Text == "Royal London Pension Report")
+                         comboBoxChooseReport.Text == "Royal London Pension Report" ||
+                         comboBoxChooseReport.SelectedText == "Now Pension Report")
                 {
                     if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" || dateStartDate.Text == "" || txtEditParameter4.Text == "" || txtEditParameter5.Text == "" || btnEditSavePDFReports.Text == "")
                     {
@@ -244,7 +245,9 @@ namespace PayRunIORunReports
                     + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
                     + prm3 + "=" + txtEditParameter3.Text;                          //Tax Year
             }
-            else if(comboBoxChooseReport.Text == "PAPDIS Report")
+            else //if(comboBoxChooseReport.Text == "PAPDIS Report" ||
+                 //   comboBoxChooseReport.Text == "Royal London Pension Report" ||
+                 //   comboBoxChooseReport.Text == "Now Pension Report")
             {
                 //PAPDIS report
                 reportType = "txt";
@@ -255,63 +258,48 @@ namespace PayRunIORunReports
                 prm5 = "PensionKey";
                 prm6 = "TransformDefinitionKey";
                 rptRef = "PAPDIS";
+                string transformKey;
+                switch (comboBoxChooseReport.Text)
+                {
+                    case "Royal London Pension Report":
+                        transformKey = "RL-PENSION-CSV";
+                        break;
+                    case "Now Pension Report":
+                        transformKey = "RL-PENSION-CSV"; //TODO change this to NOW-PENSION-CSV or whatever Tim calls it.
+                        break;
+                    default:
+                        //PAPDIS report for Smart and maybe others.
+                        transformKey = "PAPDIS-CSV";
+                        break;
+                }
                 url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
                     + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
                     + prm3 + "=" + txtEditParameter4.Text + "&"                     //Tax Year
                     + prm4 + "=" + startDate + "&"                                  //Payment date
                     + prm5 + "=" + txtEditParameter5.Text + "&"                     //Pension key
-                    + prm6 + "=" + "PAPDIS-CSV";                                    //Transform definition key
+                    + prm6 + "=" + transformKey;                                    //Transform definition key
             }
-            else //(comboBoxChooseReport.Text == "Royal London Pension Report")
+            XmlDocument xmlReport;
+            string txtReport;
+            switch (reportType)
             {
-                //PAPDIS report
-                reportType = "txt";
-                prm1 = "EmployerKey";
-                prm2 = "PayScheduleKey";
-                prm3 = "TaxYear";
-                prm4 = "PaymentDate";
-                prm5 = "PensionKey";
-                prm6 = "TransformDefinitionKey";
-                rptRef = "PAPDIS";
-                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
-                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
-                    + prm3 + "=" + txtEditParameter4.Text + "&"                     //Tax Year
-                    + prm4 + "=" + startDate + "&"                                  //Payment date
-                    + prm5 + "=" + txtEditParameter5.Text + "&"                     //Pension key
-                    + prm6 + "=" + "RL-PENSION-CSV";                                //Transform definition key
+                case "xml":
+                    //xml report
+                    xmlReport = GetXmlReport(rptRef, url);
+                    CreatePDFReports(xmlReport);
+                    break;
+                case "xlsx":
+                    //xml report
+                    xmlReport = GetXmlReport(rptRef, url);
+                    CreateXlsxReports(xmlReport);
+                    break;
+                default:
+                    //text report
+                    txtReport = GetTxtReport(rptRef, url);
+                    CreateTxtReports(txtReport);
+                    break;
             }
-
-            if (reportType == "xml")
-            {
-                //xml report
-                XmlDocument xmlReport = null;
-
-                xmlReport = GetXmlReport(rptRef, url);
-
-                CreatePDFReports(xmlReport);
-            }
-            if (reportType == "xlsx")
-            {
-                //xml report
-                XmlDocument xmlReport = null;
-
-                xmlReport = GetXmlReport(rptRef, url);
-
-                CreateXlsxReports(xmlReport);
-            }
-            else
-            {
-                //text report
-                string txtReport = null;
-                txtReport = GetTxtReport(rptRef, url);
-
-                CreateTxtReports(txtReport);
-            }
-
-
-
-
-
+            
         }
         private void CreatePDFReports(XmlDocument xmlReport)
         {
@@ -662,18 +650,24 @@ namespace PayRunIORunReports
         }
         private void CreateTxtReports(string txtReport)
         {
-            string reportName = null;
+            string reportName;
+
+            switch(comboBoxChooseReport.Text)
+            {
+                case "Royal London Pension Report":
+                    reportName = "RoyalLondonPensionReport";
+                    break;
+                case "Now Pension Report":
+                    reportName = "NowPensionReport";
+                    break;
+                default:
+                    //PAPDIS report for Smart and maybe others.
+                    reportName = "PAPDISReport";
+                    break;
+            }
             
-            if (comboBoxChooseReport.Text == "PAPDIS Report")
-            {
-                reportName = "PAPDISReport";
-            }
-            else if (comboBoxChooseReport.Text == "Royal London Pension Report")
-            {
-                reportName = "RoyalLondonPensionReport";
-            }
-           string docName = btnEditSavePDFReports.Text + "\\" + txtEditParameter1.Text + "_" + reportName + ".csv";
-           SaveTxtReport(txtReport, docName);
+            string docName = btnEditSavePDFReports.Text + "\\" + txtEditParameter1.Text + "_" + reportName + ".csv";
+            SaveTxtReport(txtReport, docName);
         }
         private XmlDocument GetXmlReport(string rptRef, string url)
         {
@@ -798,7 +792,8 @@ namespace PayRunIORunReports
                 
             }
             else if (comboBoxChooseReport.SelectedText == "PAPDIS Report" ||
-                     comboBoxChooseReport.SelectedText == "Royal London Pension Report")
+                     comboBoxChooseReport.SelectedText == "Royal London Pension Report" ||
+                     comboBoxChooseReport.SelectedText == "Now Pension Report")
             {
                txtEditParameter1.Visible = true;
                 comboBoxChooseFrequency.Visible = true;

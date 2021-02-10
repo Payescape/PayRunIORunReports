@@ -105,6 +105,7 @@
             "Combined Payroll Run Report",
             "Department Within Branch Payroll Run Details Report",
             "Note And Coin Requirement Report",
+            "Now Pension Report",
             "P11 Substitute",
             "PAPDIS Report",
             "Pension Contributions To Date Report",
