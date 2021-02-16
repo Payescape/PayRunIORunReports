@@ -125,7 +125,9 @@ namespace PayRunIORunReports
                 //Employer number, frequency, payment date, tax year, pension key
                 else if (comboBoxChooseReport.Text == "PAPDIS Report" ||
                          comboBoxChooseReport.Text == "Royal London Pension Report" ||
-                         comboBoxChooseReport.SelectedText == "Now Pension Report")
+                         comboBoxChooseReport.SelectedText == "Now Pension Report" ||
+                         comboBoxChooseReport.SelectedText == "Legal & General Pension Report" ||
+                         comboBoxChooseReport.SelectedText == "Aegon Pension Report")
                 {
                     if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" || dateStartDate.Text == "" || txtEditParameter4.Text == "" || txtEditParameter5.Text == "" || btnEditSavePDFReports.Text == "")
                     {
@@ -247,7 +249,9 @@ namespace PayRunIORunReports
             }
             else //if(comboBoxChooseReport.Text == "PAPDIS Report" ||
                  //   comboBoxChooseReport.Text == "Royal London Pension Report" ||
-                 //   comboBoxChooseReport.Text == "Now Pension Report")
+                 //   comboBoxChooseReport.Text == "Now Pension Report" ||
+                 //   comboBoxChooseReport.SelectedText == "Legal & General Pension Report" ||
+                 //   comboBoxChooseReport.SelectedText == "Aegon Pension Report")
             {
                 //PAPDIS report
                 reportType = "txt";
@@ -266,6 +270,12 @@ namespace PayRunIORunReports
                         break;
                     case "Now Pension Report":
                         transformKey = "RL-PENSION-CSV"; //TODO change this to NOW-PENSION-CSV or whatever Tim calls it.
+                        break;
+                    case "Legal & General Pension Report":
+                        transformKey = "RL-PENSION-CSV"; //TODO change this to LG-PENSION-CSV or whatever Tim calls it.
+                        break;
+                    case "Aegon Pension Report":
+                        transformKey = "RL-PENSION-CSV"; //TODO change this to AE-PENSION-CSV or whatever Tim calls it.
                         break;
                     default:
                         //PAPDIS report for Smart and maybe others.
@@ -660,6 +670,12 @@ namespace PayRunIORunReports
                 case "Now Pension Report":
                     reportName = "NowPensionReport";
                     break;
+                case "Legal & General Pension Report":
+                    reportName = "Legal&GeneralPensionReport";
+                    break;
+                case "Aegon Pension Report":
+                    reportName = "AegonPensionReport";
+                    break;
                 default:
                     //PAPDIS report for Smart and maybe others.
                     reportName = "PAPDISReport";
@@ -793,7 +809,9 @@ namespace PayRunIORunReports
             }
             else if (comboBoxChooseReport.SelectedText == "PAPDIS Report" ||
                      comboBoxChooseReport.SelectedText == "Royal London Pension Report" ||
-                     comboBoxChooseReport.SelectedText == "Now Pension Report")
+                     comboBoxChooseReport.SelectedText == "Now Pension Report" ||
+                     comboBoxChooseReport.SelectedText == "Legal & General Pension Report" ||
+                     comboBoxChooseReport.SelectedText == "Aegon Pension Report")
             {
                txtEditParameter1.Visible = true;
                 comboBoxChooseFrequency.Visible = true;

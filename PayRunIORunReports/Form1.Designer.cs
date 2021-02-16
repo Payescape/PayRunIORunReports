@@ -101,10 +101,12 @@
             this.comboBoxChooseReport.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.comboBoxChooseReport.Properties.Items.AddRange(new object[] {
+            "Aegon Pension Report",
             "Apprenticeship Levy Report",
             "Combined Payroll Run Report",
             "Department Within Branch Payroll Run Details Report",
             "Note And Coin Requirement Report",
+            "Legal & General Pension Report",
             "Now Pension Report",
             "P11 Substitute",
             "PAPDIS Report",
