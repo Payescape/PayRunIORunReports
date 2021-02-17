@@ -478,6 +478,7 @@
             this.Controls.Add(this.xtraTabControl1);
             this.Name = "Form1";
             this.Text = "PayRun.IO run reports.";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxChooseReport.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
