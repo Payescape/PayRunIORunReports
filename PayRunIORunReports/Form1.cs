@@ -257,7 +257,7 @@ namespace PayRunIORunReports
                 prm1 = "EmployerKey";
                 prm2 = "PayScheduleKey";
                 prm3 = "TaxYear";
-                rptRef = "Jim-AppLevyAnnual";
+                rptRef = "PE-AppLevyAnnual";
                 url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
                     + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
                     + prm3 + "=" + txtEditParameter3.Text;                          //Tax Year
