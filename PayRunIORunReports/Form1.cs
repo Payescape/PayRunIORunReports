@@ -108,6 +108,7 @@ namespace PayRunIORunReports
                     comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report" ||
                     comboBoxChooseReport.SelectedText == "Pension Contributions To Date Report" ||
                     comboBoxChooseReport.SelectedText == "Statutory Absence Report" ||
+                    comboBoxChooseReport.SelectedText == "Statutory Sick Pay Paid Report" ||
                     comboBoxChooseReport.SelectedText == "Pre Report")
                 {
                     if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" || dateStartDate.Text == "" || dateEndDate.Text == "" || btnEditSavePDFReports.Text == "")
@@ -219,6 +220,20 @@ namespace PayRunIORunReports
                 prm3 = "StartDate";
                 prm4 = "EndDate";
                 rptRef = "PSSPAMS";
+                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                    + prm3 + "=" + startDate + "&"                                  //Start date
+                    + prm4 + "=" + endDate;                                         //End date
+            }
+            else if (comboBoxChooseReport.Text == "Statutory Sick Pay Paid Report")
+            {
+                //PSSSPRUN - Statutory Absence Report"
+                reportType = "xml";
+                prm1 = "EmployerKey";
+                prm2 = "PayScheduleKey";
+                prm3 = "StartDate";
+                prm4 = "EndDate";
+                rptRef = "PSSSPRUN";
                 url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
                     + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
                     + prm3 + "=" + startDate + "&"                                  //Start date
@@ -376,6 +391,12 @@ namespace PayRunIORunReports
                 assemblyName = "PayRunIOClassLibrary";
                 xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
             }
+            else if (comboBoxChooseReport.Text == "Statutory Sick Pay Paid Report")
+            {
+                reportName = "StatutorySickPayPaidReport";
+                assemblyName = "PayRunIOClassLibrary";
+                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+            }
             string docName = btnEditSavePDFReports.Text + "//" + txtEditParameter1.Text + "_" + reportName + ".pdf";
             SavePDFReport(xtraReport, docName);
         }
@@ -501,6 +522,7 @@ namespace PayRunIORunReports
                 comboBoxChooseReport.SelectedText == "Department Within Branch Payroll Run Details Report" ||
                 comboBoxChooseReport.SelectedText == "Pension Contributions To Date Report" ||
                 comboBoxChooseReport.SelectedText == "Statutory Absence Report" ||
+                comboBoxChooseReport.SelectedText == "Statutory Sick Pay Paid Report" ||
                 comboBoxChooseReport.SelectedText == "Pre Report")
             {
                 //I'll these from the database

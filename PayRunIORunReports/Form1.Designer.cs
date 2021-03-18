@@ -113,7 +113,8 @@
             "Pension Contributions To Date Report",
             "Pre Report",
             "Royal London Pension Report",
-            "Statutory Absence Report"});
+            "Statutory Absence Report",
+            "Statutory Sick Pay Paid Report"});
             this.comboBoxChooseReport.Size = new System.Drawing.Size(482, 20);
             this.comboBoxChooseReport.TabIndex = 1;
             this.comboBoxChooseReport.SelectedValueChanged += new System.EventHandler(this.comboBoxChooseReport_SelectedValueChanged);
