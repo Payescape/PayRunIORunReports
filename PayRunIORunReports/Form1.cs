@@ -36,6 +36,8 @@ namespace PayRunIORunReports
             txtEditParameter4.Visible = false;
             txtEditParameter5.Visible = false;
             txtEditParameter6.Visible = false;
+            chkBoxSorted.Visible = false;
+            chkBoxSummary.Visible = false;
             lblParameter1.Visible = false;
             lblParameter2.Visible = false;
             lblParameter3.Visible = false;
@@ -106,6 +108,7 @@ namespace PayRunIORunReports
                 //Employer number, frequency, start date, end date
                 if (comboBoxChooseReport.SelectedText == "Combined Payroll Run Report" ||
                     comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report" ||
+                    comboBoxChooseReport.SelectedText == "Pay Component Exception Report" ||
                     comboBoxChooseReport.SelectedText == "Pension Contributions To Date Report" ||
                     comboBoxChooseReport.SelectedText == "Statutory Absence Report" ||
                     comboBoxChooseReport.SelectedText == "Statutory Sick Pay Paid Report" ||
@@ -196,6 +199,24 @@ namespace PayRunIORunReports
                 url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
                     + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
                     + prm3 + "=" + startDate;                                       //Payment date
+            }
+            else if (comboBoxChooseReport.Text == "Pay Component Exception Report")
+            {
+                //PSEXCPC - Pay Component Exception Report"
+                reportType = "xml";
+                prm1 = "EmployerKey";
+                prm2 = "PayScheduleKey";
+                prm3 = "PaymentDate1";
+                prm4 = "PaymentDate2";
+                prm5 = "SortByBranch";
+                prm6 = "SummaryOnly";
+                rptRef = "PSEXCPC";
+                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                    + prm3 + "=" + startDate + "&"                                  //Payment date 1
+                    + prm4 + "=" + endDate + "&"                                    //Payment date 2
+                    + prm5 + "=" + chkBoxSorted.Checked + "&"                       //Sorted By Branch
+                    + prm6 + "=" + chkBoxSummary.Checked;                           //Summary only.
             }
             else if (comboBoxChooseReport.Text == "Pension Contributions To Date Report")
             {
@@ -348,55 +369,57 @@ namespace PayRunIORunReports
             string assemblyName = "PayRunIOClassLibrary";
             XtraReport xtraReport = new XtraReport();
 
-            if (comboBoxChooseReport.Text == "Combined Payroll Run Report")
+            switch(comboBoxChooseReport.Text)
             {
+                case "Combined Payroll Run Report":
+                    reportName = "CombinedPayrollRunReport";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    reportName = "CombinedPayrollRunReport";
+                    break;
+                case "Department Within Branch Payroll Run Details Report":
+                    reportName = "CombinedPayrollRunReport";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    reportName = "DepartmentWithinBranchPayrollRunDetailsReport";
+                    break;
+                case "Note And Coin Requirement Report":
+                    reportName = "NoteAndCoinRequirementReport";
+                    assemblyName = "PayRunIOClassLibrary";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    break;
+                case "Pay Component Exception Report":
+                    reportName = "PayComponentExceptionReport";
+                    assemblyName = "PayRunIOClassLibrary";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    break;
+                case "Pension Contributions To Date Report":
+                    reportName = "PensionContributionsToDateReport";
+                    assemblyName = "PayRunIOClassLibrary";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    break;
+                case "P11 Substitute":
+                    reportName = "P11Substitute";
+                    assemblyName = "PayRunIOClassLibrary";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    break;
+                case "Apprenticeship Levy Report":
+                    reportName = "ApprenticeshipLevyReport";
+                    assemblyName = "PayRunIOClassLibrary";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    break;
+                case "Statutory Absence Report":
+                    reportName = "StatutoryAbsenceReport";
+                    assemblyName = "PayRunIOClassLibrary";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    break;
+                case "Statutory Sick Pay Paid Report":
+                    reportName = "StatutorySickPayPaidReport";
+                    assemblyName = "PayRunIOClassLibrary";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    break;
+                default:
+                    break;
+            }
 
-                reportName = "CombinedPayrollRunReport";
-                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
-                reportName = "CombinedPayrollRunReport";
-            }
-            else if (comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report")
-            {
-                reportName = "CombinedPayrollRunReport";
-                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
-                reportName = "DepartmentWithinBranchPayrollRunDetailsReport";
-            }
-            else if (comboBoxChooseReport.Text == "Note And Coin Requirement Report")
-            {
-                reportName = "NoteAndCoinRequirementReport";
-                assemblyName = "PayRunIOClassLibrary";
-                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
-            }
-            else if (comboBoxChooseReport.Text == "Pension Contributions To Date Report")
-            {
-                reportName = "PensionContributionsToDateReport";
-                assemblyName = "PayRunIOClassLibrary";
-                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
-            }
-            else if (comboBoxChooseReport.Text == "P11 Substitute")
-            {
-                reportName = "P11Substitute";
-                assemblyName = "PayRunIOClassLibrary";
-                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
-            }
-            else if (comboBoxChooseReport.Text == "Apprenticeship Levy Report")
-            {
-                reportName = "ApprenticeshipLevyReport";
-                assemblyName = "PayRunIOClassLibrary";
-                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
-            }
-            else if (comboBoxChooseReport.Text == "Statutory Absence Report")
-            {
-                reportName = "StatutoryAbsenceReport";
-                assemblyName = "PayRunIOClassLibrary";
-                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
-            }
-            else if (comboBoxChooseReport.Text == "Statutory Sick Pay Paid Report")
-            {
-                reportName = "StatutorySickPayPaidReport";
-                assemblyName = "PayRunIOClassLibrary";
-                xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
-            }
             string docName = btnEditSavePDFReports.Text + "//" + txtEditParameter1.Text + "_" + reportName + ".pdf";
             SavePDFReport(xtraReport, docName);
         }
@@ -518,77 +541,93 @@ namespace PayRunIORunReports
         {
             HideControls();
 
-            if (comboBoxChooseReport.SelectedText=="Combined Payroll Run Report" || 
-                comboBoxChooseReport.SelectedText == "Department Within Branch Payroll Run Details Report" ||
-                comboBoxChooseReport.SelectedText == "Pension Contributions To Date Report" ||
-                comboBoxChooseReport.SelectedText == "Statutory Absence Report" ||
-                comboBoxChooseReport.SelectedText == "Statutory Sick Pay Paid Report" ||
-                comboBoxChooseReport.SelectedText == "Pre Report")
+            switch(comboBoxChooseReport.SelectedText)
             {
-                //I'll these from the database
-                txtEditParameter1.Visible = true;
-                comboBoxChooseFrequency.Visible = true;
-                dateStartDate.Visible = true;
-                dateEndDate.Visible = true;
-                lblParameter1.Text = "Enter employer Number in the form nnnn.";
-                lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
-                lblParameter3.Text = "Enter start date.";
-                lblParameter4.Text = "Enter end date.";
-                lblParameter1.Visible = true;
-                lblParameter2.Visible = true;
-                lblParameter3.Visible = true;
-                lblParameter4.Visible = true;
-                
+                case "Combined Payroll Run Report":
+                case "Department Within Branch Payroll Run Details Report":
+                case "Pension Contributions To Date Report":
+                case "Statutory Absence Report":
+                case "Statutory Sick Pay Paid Report":
+                case "Pre Report":
+                    txtEditParameter1.Visible = true;
+                    comboBoxChooseFrequency.Visible = true;
+                    dateStartDate.Visible = true;
+                    dateEndDate.Visible = true;
+                    lblParameter1.Text = "Enter employer Number in the form nnnn.";
+                    lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
+                    lblParameter3.Text = "Enter start date.";
+                    lblParameter4.Text = "Enter end date.";
+                    lblParameter1.Visible = true;
+                    lblParameter2.Visible = true;
+                    lblParameter3.Visible = true;
+                    lblParameter4.Visible = true;
+                    break;
+                case "Pay Component Exception Report":
+                    txtEditParameter1.Visible = true;
+                    comboBoxChooseFrequency.Visible = true;
+                    dateStartDate.Visible = true;
+                    dateEndDate.Visible = true;
+                    chkBoxSorted.Visible = true;
+                    chkBoxSummary.Visible = true;
+                    lblParameter1.Text = "Enter employer Number in the form nnnn.";
+                    lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
+                    lblParameter3.Text = "Enter first payment date.";
+                    lblParameter4.Text = "Enter second payment date.";
+                    lblParameter5.Text = "Sort by branch.";
+                    lblParameter6.Text = "Summary only.";
+                    lblParameter1.Visible = true;
+                    lblParameter2.Visible = true;
+                    lblParameter3.Visible = true;
+                    lblParameter4.Visible = true;
+                    break;
+                case "Note And Coin Requirement Report":
+                    txtEditParameter1.Visible = true;
+                    comboBoxChooseFrequency.Visible = true;
+                    dateStartDate.Visible = true;
+                    lblParameter1.Text = "Enter employer Number in the form nnnn.";
+                    lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
+                    lblParameter3.Text = "Enter payment date.";
+                    lblParameter1.Visible = true;
+                    lblParameter2.Visible = true;
+                    lblParameter3.Visible = true;
+                    break;
+                case "P11 Substitute":
+                case "Apprenticeship Levy Report":
+                    txtEditParameter1.Visible = true;
+                    comboBoxChooseFrequency.Visible = true;
+                    txtEditParameter3.Visible = true;
+                    lblParameter1.Text = "Enter employer Number in the form nnnn.";
+                    lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
+                    lblParameter3.Text = "Enter tax year.";
+                    lblParameter1.Visible = true;
+                    lblParameter2.Visible = true;
+                    lblParameter3.Visible = true;
+                    break;
+                case "PAPDIS Report":
+                case "Royal London Pension Report":
+                case "Now Pension Report":
+                case "Legal & General Pension Report":
+                case "Aegon Pension Report":
+                    txtEditParameter1.Visible = true;
+                    comboBoxChooseFrequency.Visible = true;
+                    dateStartDate.Visible = true;
+                    txtEditParameter4.Visible = true;
+                    txtEditParameter5.Visible = true;
+                    lblParameter1.Text = "Enter employer Number in the form nnnn.";
+                    lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
+                    lblParameter3.Text = "Enter payment date.";
+                    lblParameter4.Text = "Enter tax year.";
+                    lblParameter5.Text = "Enter pension key.";
+                    lblParameter1.Visible = true;
+                    lblParameter2.Visible = true;
+                    lblParameter3.Visible = true;
+                    lblParameter4.Visible = true;
+                    lblParameter5.Visible = true;
+                    break;
+                default:
+                    break;
             }
-            else if (comboBoxChooseReport.SelectedText == "Note And Coin Requirement Report")
-            {
-                txtEditParameter1.Visible = true;
-                comboBoxChooseFrequency.Visible = true;
-                dateStartDate.Visible = true;
-                lblParameter1.Text = "Enter employer Number in the form nnnn.";
-                lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
-                lblParameter3.Text = "Enter payment date.";
-                lblParameter1.Visible = true;
-                lblParameter2.Visible = true;
-                lblParameter3.Visible = true;
-                
-            }
-            else if (comboBoxChooseReport.SelectedText == "P11 Substitute" ||
-                     comboBoxChooseReport.SelectedText == "Apprenticeship Levy Report")
-            {
-                txtEditParameter1.Visible = true;
-                comboBoxChooseFrequency.Visible = true;
-                txtEditParameter3.Visible = true;
-                lblParameter1.Text = "Enter employer Number in the form nnnn.";
-                lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
-                lblParameter3.Text = "Enter tax year.";
-                lblParameter1.Visible = true;
-                lblParameter2.Visible = true;
-                lblParameter3.Visible = true;
-                
-            }
-            else if (comboBoxChooseReport.SelectedText == "PAPDIS Report" ||
-                     comboBoxChooseReport.SelectedText == "Royal London Pension Report" ||
-                     comboBoxChooseReport.SelectedText == "Now Pension Report" ||
-                     comboBoxChooseReport.SelectedText == "Legal & General Pension Report" ||
-                     comboBoxChooseReport.SelectedText == "Aegon Pension Report")
-            {
-               txtEditParameter1.Visible = true;
-                comboBoxChooseFrequency.Visible = true;
-                dateStartDate.Visible = true;
-                txtEditParameter4.Visible = true;
-                txtEditParameter5.Visible = true;
-                lblParameter1.Text = "Enter employer Number in the form nnnn.";
-                lblParameter2.Text = "Enter pay schedule or frequency e.g. Weekly or Monthly.";
-                lblParameter3.Text = "Enter payment date.";
-                lblParameter4.Text = "Enter tax year.";
-                lblParameter5.Text = "Enter pension key.";
-                lblParameter1.Visible = true;
-                lblParameter2.Visible = true;
-                lblParameter3.Visible = true;
-                lblParameter4.Visible = true;
-                lblParameter5.Visible = true;
-            }
+            
         }
         
         private void btnEditSavePDFReports_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)

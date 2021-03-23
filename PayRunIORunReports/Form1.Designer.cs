@@ -67,6 +67,8 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.lblSavePDFReports = new DevExpress.XtraEditors.LabelControl();
             this.btnEditSavePDFReports = new DevExpress.XtraEditors.ButtonEdit();
+            this.chkBoxSorted = new System.Windows.Forms.CheckBox();
+            this.chkBoxSummary = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxChooseReport.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
@@ -110,6 +112,7 @@
             "Now Pension Report",
             "P11 Substitute",
             "PAPDIS Report",
+            "Pay Component Exception Report",
             "Pension Contributions To Date Report",
             "Pre Report",
             "Royal London Pension Report",
@@ -135,6 +138,8 @@
             // 
             // xtraTabMainForm
             // 
+            this.xtraTabMainForm.Controls.Add(this.chkBoxSummary);
+            this.xtraTabMainForm.Controls.Add(this.chkBoxSorted);
             this.xtraTabMainForm.Controls.Add(this.dateEndDate);
             this.xtraTabMainForm.Controls.Add(this.dateStartDate);
             this.xtraTabMainForm.Controls.Add(this.comboBoxChooseFrequency);
@@ -206,7 +211,7 @@
             // 
             // txtEditParameter6
             // 
-            this.txtEditParameter6.Location = new System.Drawing.Point(57, 272);
+            this.txtEditParameter6.Location = new System.Drawing.Point(57, 276);
             this.txtEditParameter6.Name = "txtEditParameter6";
             this.txtEditParameter6.Size = new System.Drawing.Size(482, 20);
             this.txtEditParameter6.TabIndex = 7;
@@ -467,6 +472,26 @@
             this.btnEditSavePDFReports.TabIndex = 29;
             this.btnEditSavePDFReports.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEditSavePDFReports_ButtonClick);
             // 
+            // chkBoxSorted
+            // 
+            this.chkBoxSorted.AutoSize = true;
+            this.chkBoxSorted.Location = new System.Drawing.Point(57, 233);
+            this.chkBoxSorted.Name = "chkBoxSorted";
+            this.chkBoxSorted.Size = new System.Drawing.Size(101, 17);
+            this.chkBoxSorted.TabIndex = 8;
+            this.chkBoxSorted.Text = "Sort by branch.";
+            this.chkBoxSorted.UseVisualStyleBackColor = true;
+            // 
+            // chkBoxSummary
+            // 
+            this.chkBoxSummary.AutoSize = true;
+            this.chkBoxSummary.Location = new System.Drawing.Point(57, 278);
+            this.chkBoxSummary.Name = "chkBoxSummary";
+            this.chkBoxSummary.Size = new System.Drawing.Size(97, 17);
+            this.chkBoxSummary.TabIndex = 9;
+            this.chkBoxSummary.Text = "Summary only.";
+            this.chkBoxSummary.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -555,6 +580,8 @@
         private DevExpress.XtraEditors.ComboBoxEdit comboBoxChooseFrequency;
         private DevExpress.XtraEditors.DateEdit dateEndDate;
         private DevExpress.XtraEditors.DateEdit dateStartDate;
+        private System.Windows.Forms.CheckBox chkBoxSummary;
+        private System.Windows.Forms.CheckBox chkBoxSorted;
     }
 }
 
