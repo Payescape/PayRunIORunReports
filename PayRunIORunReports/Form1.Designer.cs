@@ -31,6 +31,8 @@
             this.comboBoxChooseReport = new DevExpress.XtraEditors.ComboBoxEdit();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabMainForm = new DevExpress.XtraTab.XtraTabPage();
+            this.chkBoxSummary = new System.Windows.Forms.CheckBox();
+            this.chkBoxSorted = new System.Windows.Forms.CheckBox();
             this.dateEndDate = new DevExpress.XtraEditors.DateEdit();
             this.dateStartDate = new DevExpress.XtraEditors.DateEdit();
             this.comboBoxChooseFrequency = new DevExpress.XtraEditors.ComboBoxEdit();
@@ -67,8 +69,6 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.lblSavePDFReports = new DevExpress.XtraEditors.LabelControl();
             this.btnEditSavePDFReports = new DevExpress.XtraEditors.ButtonEdit();
-            this.chkBoxSorted = new System.Windows.Forms.CheckBox();
-            this.chkBoxSummary = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxChooseReport.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
@@ -113,6 +113,7 @@
             "P11 Substitute",
             "PAPDIS Report",
             "Pay Component Exception Report",
+            "Payroll Run Exception Report",
             "Pension Contributions To Date Report",
             "Pre Report",
             "Royal London Pension Report",
@@ -160,6 +161,26 @@
             this.xtraTabMainForm.Name = "xtraTabMainForm";
             this.xtraTabMainForm.Size = new System.Drawing.Size(617, 300);
             this.xtraTabMainForm.Text = "Main form.";
+            // 
+            // chkBoxSummary
+            // 
+            this.chkBoxSummary.AutoSize = true;
+            this.chkBoxSummary.Location = new System.Drawing.Point(57, 278);
+            this.chkBoxSummary.Name = "chkBoxSummary";
+            this.chkBoxSummary.Size = new System.Drawing.Size(97, 17);
+            this.chkBoxSummary.TabIndex = 9;
+            this.chkBoxSummary.Text = "Summary only.";
+            this.chkBoxSummary.UseVisualStyleBackColor = true;
+            // 
+            // chkBoxSorted
+            // 
+            this.chkBoxSorted.AutoSize = true;
+            this.chkBoxSorted.Location = new System.Drawing.Point(57, 233);
+            this.chkBoxSorted.Name = "chkBoxSorted";
+            this.chkBoxSorted.Size = new System.Drawing.Size(101, 17);
+            this.chkBoxSorted.TabIndex = 8;
+            this.chkBoxSorted.Text = "Sort by branch.";
+            this.chkBoxSorted.UseVisualStyleBackColor = true;
             // 
             // dateEndDate
             // 
@@ -471,26 +492,6 @@
             this.btnEditSavePDFReports.Size = new System.Drawing.Size(503, 20);
             this.btnEditSavePDFReports.TabIndex = 29;
             this.btnEditSavePDFReports.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.btnEditSavePDFReports_ButtonClick);
-            // 
-            // chkBoxSorted
-            // 
-            this.chkBoxSorted.AutoSize = true;
-            this.chkBoxSorted.Location = new System.Drawing.Point(57, 233);
-            this.chkBoxSorted.Name = "chkBoxSorted";
-            this.chkBoxSorted.Size = new System.Drawing.Size(101, 17);
-            this.chkBoxSorted.TabIndex = 8;
-            this.chkBoxSorted.Text = "Sort by branch.";
-            this.chkBoxSorted.UseVisualStyleBackColor = true;
-            // 
-            // chkBoxSummary
-            // 
-            this.chkBoxSummary.AutoSize = true;
-            this.chkBoxSummary.Location = new System.Drawing.Point(57, 278);
-            this.chkBoxSummary.Name = "chkBoxSummary";
-            this.chkBoxSummary.Size = new System.Drawing.Size(97, 17);
-            this.chkBoxSummary.TabIndex = 9;
-            this.chkBoxSummary.Text = "Summary only.";
-            this.chkBoxSummary.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

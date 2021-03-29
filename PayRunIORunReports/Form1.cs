@@ -109,6 +109,7 @@ namespace PayRunIORunReports
                 if (comboBoxChooseReport.SelectedText == "Combined Payroll Run Report" ||
                     comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report" ||
                     comboBoxChooseReport.SelectedText == "Pay Component Exception Report" ||
+                    comboBoxChooseReport.SelectedText == "Payroll Run Exception Report" ||
                     comboBoxChooseReport.SelectedText == "Pension Contributions To Date Report" ||
                     comboBoxChooseReport.SelectedText == "Statutory Absence Report" ||
                     comboBoxChooseReport.SelectedText == "Statutory Sick Pay Paid Report" ||
@@ -165,180 +166,190 @@ namespace PayRunIORunReports
             string prm6 = null;
             string rptRef = null;
             string url = null;
-            if (comboBoxChooseReport.Text == "Combined Payroll Run Report" ||
-                comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report")
+            switch(comboBoxChooseReport.Text)
             {
-                //PSCRN1 - Combined Payroll Run Report or Department Within Branch Payroll Run Details Report
-                //I'm using the same PayRun.IO report for these 2 reports. I just need to sort the department within branch report differently.
-                reportType = "xml";
-                prm1 = "EmployerKey";
-                prm2 = "PayScheduleKey";
-                prm3 = "StartDate";
-                prm4 = "EndDate";
-                prm5 = "SortByBranch";
-                rptRef = "PSCRN1";
+                case "Combined Payroll Run Report":
+                case "Department Within Branch Payroll Run Details Report":
+                    //PSCRN1 - Combined Payroll Run Report or Department Within Branch Payroll Run Details Report
+                    //I'm using the same PayRun.IO report for these 2 reports. I just need to sort the department within branch report differently.
+                    reportType = "xml";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "StartDate";
+                    prm4 = "EndDate";
+                    prm5 = "SortByBranch";
+                    rptRef = "PSCRN1";
 
-                if (comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report")
-                {
-                    sortByBranch = "True";
-                }
-                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer number
-                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
-                    + prm3 + "=" + startDate + "&"                                  //Start date
-                    + prm4 + "=" + endDate + "&"                                    //End date
-                    + prm5 + "=" + sortByBranch;                                    //Sort by branch
-            }
-            else if (comboBoxChooseReport.Text == "Note And Coin Requirement Report")
-            {
-                //PSCOIN2 - Note And Coin Requirement Report
-                reportType = "xml";
-                prm1 = "EmployerKey";
-                prm2 = "PayScheduleKey";
-                prm3 = "PaymentDate";
-                rptRef = "PSCOIN2";
-                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
-                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
-                    + prm3 + "=" + startDate;                                       //Payment date
-            }
-            else if (comboBoxChooseReport.Text == "Pay Component Exception Report")
-            {
-                //PSEXCPC - Pay Component Exception Report"
-                reportType = "xml";
-                prm1 = "EmployerKey";
-                prm2 = "PayScheduleKey";
-                prm3 = "PaymentDate1";
-                prm4 = "PaymentDate2";
-                prm5 = "SortByBranch";
-                prm6 = "SummaryOnly";
-                rptRef = "PSEXCPC";
-                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
-                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
-                    + prm3 + "=" + startDate + "&"                                  //Payment date 1
-                    + prm4 + "=" + endDate + "&"                                    //Payment date 2
-                    + prm5 + "=" + chkBoxSorted.Checked + "&"                       //Sorted By Branch
-                    + prm6 + "=" + chkBoxSummary.Checked;                           //Summary only.
-            }
-            else if (comboBoxChooseReport.Text == "Pension Contributions To Date Report")
-            {
-                //PSPEN2 - Pension Contributions To Date Report"
-                reportType = "xml";
-                prm1 = "EmployerKey";
-                prm2 = "PayScheduleKey";
-                prm3 = "StartDate";
-                prm4 = "EndDate";
-                rptRef = "PSPEN2";
-                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
-                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
-                    + prm3 + "=" + startDate + "&"                                  //Start date
-                    + prm4 + "=" + endDate;                                         //End date
-            }
-            else if (comboBoxChooseReport.Text == "Statutory Absence Report")
-            {
-                //PSSPAMS - Statutory Absence Report"
-                reportType = "xml";
-                prm1 = "EmployerKey";
-                prm2 = "PayScheduleKey";
-                prm3 = "StartDate";
-                prm4 = "EndDate";
-                rptRef = "PSSPAMS";
-                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
-                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
-                    + prm3 + "=" + startDate + "&"                                  //Start date
-                    + prm4 + "=" + endDate;                                         //End date
-            }
-            else if (comboBoxChooseReport.Text == "Statutory Sick Pay Paid Report")
-            {
-                //PSSSPRUN - Statutory Absence Report"
-                reportType = "xml";
-                prm1 = "EmployerKey";
-                prm2 = "PayScheduleKey";
-                prm3 = "StartDate";
-                prm4 = "EndDate";
-                rptRef = "PSSSPRUN";
-                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
-                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
-                    + prm3 + "=" + startDate + "&"                                  //Start date
-                    + prm4 + "=" + endDate;                                         //End date
-            }
-            else if (comboBoxChooseReport.Text == "Pre Report")
-            {
-                //PSPRE - Pre Report"
-                reportType = "xlsx";
-                prm1 = "EmployerKey";
-                prm2 = "PayScheduleKey";
-                prm3 = "StartDate";
-                prm4 = "EndDate";
-                rptRef = "PSPRE";
-                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
-                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
-                    + prm3 + "=" + startDate + "&"                                  //Start date
-                    + prm4 + "=" + endDate;                                         //End date
-            }
-            else if (comboBoxChooseReport.Text == "P11 Substitute")
-            {
-                //PSP11 - P11 Substitute"
-                reportType = "xml";
-                prm1 = "EmployerKey";
-                prm2 = "PayScheduleKey";
-                prm3 = "TaxYear";
-                rptRef = "PSP11";
-                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
-                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
-                    + prm3 + "=" + txtEditParameter3.Text;                          //Tax Year
-            }
-            else if (comboBoxChooseReport.Text == "Apprenticeship Levy Report")
-            {
-                //APPLEVYANNUAL - Apprenticeship Levy Report"
-                reportType = "xml";
-                prm1 = "EmployerKey";
-                prm2 = "PayScheduleKey";
-                prm3 = "TaxYear";
-                rptRef = "PE-AppLevyAnnual";
-                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
-                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
-                    + prm3 + "=" + txtEditParameter3.Text;                          //Tax Year
-            }
-            else //if(comboBoxChooseReport.Text == "PAPDIS Report" ||
-                 //   comboBoxChooseReport.Text == "Royal London Pension Report" ||
-                 //   comboBoxChooseReport.Text == "Now Pension Report" ||
-                 //   comboBoxChooseReport.SelectedText == "Legal & General Pension Report" ||
-                 //   comboBoxChooseReport.SelectedText == "Aegon Pension Report")
-            {
-                //PAPDIS report
-                reportType = "txt";
-                prm1 = "EmployerKey";
-                prm2 = "PayScheduleKey";
-                prm3 = "TaxYear";
-                prm4 = "PaymentDate";
-                prm5 = "PensionKey";
-                prm6 = "TransformDefinitionKey";
-                rptRef = "PAPDIS";
-                string transformKey;
-                switch (comboBoxChooseReport.Text)
-                {
-                    case "Royal London Pension Report":
-                        transformKey = "RL-PENSION-CSV";
-                        break;
-                    case "Now Pension Report":
-                        transformKey = "RL-PENSION-CSV"; //TODO change this to NOW-PENSION-CSV or whatever Tim calls it.
-                        break;
-                    case "Legal & General Pension Report":
-                        transformKey = "RL-PENSION-CSV"; //TODO change this to LG-PENSION-CSV or whatever Tim calls it.
-                        break;
-                    case "Aegon Pension Report":
-                        transformKey = "RL-PENSION-CSV"; //TODO change this to AE-PENSION-CSV or whatever Tim calls it.
-                        break;
-                    default:
-                        //PAPDIS report for Smart and maybe others.
-                        transformKey = "PAPDIS-CSV";
-                        break;
-                }
-                url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
-                    + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
-                    + prm3 + "=" + txtEditParameter4.Text + "&"                     //Tax Year
-                    + prm4 + "=" + startDate + "&"                                  //Payment date
-                    + prm5 + "=" + txtEditParameter5.Text + "&"                     //Pension key
-                    + prm6 + "=" + transformKey;                                    //Transform definition key
+                    if (comboBoxChooseReport.Text == "Department Within Branch Payroll Run Details Report")
+                    {
+                        sortByBranch = "True";
+                    }
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer number
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + startDate + "&"                                  //Start date
+                        + prm4 + "=" + endDate + "&"                                    //End date
+                        + prm5 + "=" + sortByBranch;                                    //Sort by branch
+                    break;
+                case "Note And Coin Requirement Report":
+                    //PSCOIN2 - Note And Coin Requirement Report
+                    reportType = "xml";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "PaymentDate";
+                    rptRef = "PSCOIN2";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + startDate;                                       //Payment date
+                    break;
+                case "Pay Component Exception Report":
+                    //PSEXCPC - Pay Component Exception Report"
+                    reportType = "xml";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "PaymentDate1";
+                    prm4 = "PaymentDate2";
+                    prm5 = "SortByBranch";
+                    prm6 = "SummaryOnly";
+                    rptRef = "PSEXCPC";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + startDate + "&"                                  //Payment date 1
+                        + prm4 + "=" + endDate + "&"                                    //Payment date 2
+                        + prm5 + "=" + chkBoxSorted.Checked + "&"                       //Sorted By Branch
+                        + prm6 + "=" + chkBoxSummary.Checked;                           //Summary only.
+                    break;
+                case "Payroll Run Exception Report":
+                    //PSEXCRUN - Payroll Run Exception Report"
+                    reportType = "xml";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "PaymentDate1";
+                    prm4 = "PaymentDate2";
+                    prm5 = "SortByBranch";
+                    prm6 = "SummaryOnly";
+                    rptRef = "PSEXCRUN";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + startDate + "&"                                  //Payment date 1
+                        + prm4 + "=" + endDate + "&"                                    //Payment date 2
+                        + prm5 + "=" + chkBoxSorted.Checked + "&"                       //Sorted By Branch
+                        + prm6 + "=" + chkBoxSummary.Checked;                           //Summary only.
+                    break;
+                case "Pension Contributions To Date Report":
+                    //PSPEN2 - Pension Contributions To Date Report"
+                    reportType = "xml";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "StartDate";
+                    prm4 = "EndDate";
+                    rptRef = "PSPEN2";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + startDate + "&"                                  //Start date
+                        + prm4 + "=" + endDate;                                         //End date
+                    break;
+                case "Statutory Absence Report":
+                    //PSSPAMS - Statutory Absence Report"
+                    reportType = "xml";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "StartDate";
+                    prm4 = "EndDate";
+                    rptRef = "PSSPAMS";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + startDate + "&"                                  //Start date
+                        + prm4 + "=" + endDate;                                         //End date
+                    break;
+                case "Statutory Sick Pay Paid Report":
+                    //PSSSPRUN - Statutory Absence Report"
+                    reportType = "xml";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "StartDate";
+                    prm4 = "EndDate";
+                    rptRef = "PSSSPRUN";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + startDate + "&"                                  //Start date
+                        + prm4 + "=" + endDate;                                         //End date
+                    break;
+                case "Pre Report":
+                    //PSPRE - Pre Report"
+                    reportType = "xlsx";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "StartDate";
+                    prm4 = "EndDate";
+                    rptRef = "PSPRE";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + startDate + "&"                                  //Start date
+                        + prm4 + "=" + endDate;                                         //End date
+                    break;
+                case "P11 Substitute":
+                    //PSP11 - P11 Substitute"
+                    reportType = "xml";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "TaxYear";
+                    rptRef = "PSP11";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + txtEditParameter3.Text;                          //Tax Year
+                    break;
+                case "Apprenticeship Levy Report":
+                    //APPLEVYANNUAL - Apprenticeship Levy Report"
+                    reportType = "xml";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "TaxYear";
+                    rptRef = "PE-AppLevyAnnual";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + txtEditParameter3.Text;                          //Tax Year
+                    break;
+                default:
+                    //PAPDIS report
+                    //Royal London Pension Report
+                    //Now Pension Report
+                    //Legal & General Pension Report
+                    //Aegon Pension Report
+                    reportType = "txt";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "TaxYear";
+                    prm4 = "PaymentDate";
+                    prm5 = "PensionKey";
+                    prm6 = "TransformDefinitionKey";
+                    rptRef = "PAPDIS";
+                    string transformKey;
+                    switch (comboBoxChooseReport.Text)
+                    {
+                        case "Royal London Pension Report":
+                            transformKey = "RL-PENSION-CSV";
+                            break;
+                        case "Now Pension Report":
+                            transformKey = "RL-PENSION-CSV"; //TODO change this to NOW-PENSION-CSV or whatever Tim calls it.
+                            break;
+                        case "Legal & General Pension Report":
+                            transformKey = "RL-PENSION-CSV"; //TODO change this to LG-PENSION-CSV or whatever Tim calls it.
+                            break;
+                        case "Aegon Pension Report":
+                            transformKey = "RL-PENSION-CSV"; //TODO change this to AE-PENSION-CSV or whatever Tim calls it.
+                            break;
+                        default:
+                            //PAPDIS report for Smart and maybe others.
+                            transformKey = "PAPDIS-CSV";
+                            break;
+                    }
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + txtEditParameter4.Text + "&"                     //Tax Year
+                        + prm4 + "=" + startDate + "&"                                  //Payment date
+                        + prm5 + "=" + txtEditParameter5.Text + "&"                     //Pension key
+                        + prm6 + "=" + transformKey;                                    //Transform definition key
+                    break;
             }
             XmlDocument xmlReport;
             string txtReport;
@@ -388,6 +399,11 @@ namespace PayRunIORunReports
                     break;
                 case "Pay Component Exception Report":
                     reportName = "PayComponentExceptionReport";
+                    assemblyName = "PayRunIOClassLibrary";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    break;
+                case "Payroll Run Exception Report":
+                    reportName = "PayrollRunExceptionReport";
                     assemblyName = "PayRunIOClassLibrary";
                     xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
                     break;
@@ -563,6 +579,7 @@ namespace PayRunIORunReports
                     lblParameter4.Visible = true;
                     break;
                 case "Pay Component Exception Report":
+                case "Payroll Run Exception Report":
                     txtEditParameter1.Visible = true;
                     comboBoxChooseFrequency.Visible = true;
                     dateStartDate.Visible = true;
