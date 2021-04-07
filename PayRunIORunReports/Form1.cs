@@ -118,6 +118,7 @@ namespace PayRunIORunReports
                     break;
                 //Employer number, frequency, payment date
                 case "Note And Coin Requirement Report":
+                case "Current Attachment Of Earnings Orders":
                     if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" || dateStartDate.Text == "" || btnEditSavePDFReports.Text == "")
                     {
                         allEntered = false;
@@ -197,6 +198,17 @@ namespace PayRunIORunReports
                     prm2 = "PayScheduleKey";
                     prm3 = "PaymentDate";
                     rptRef = "PSCOIN2";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + startDate;                                       //Payment date
+                    break;
+                case "Current Attachment Of Earnings Orders":
+                    //PSAEORUN - Current Attachment Of Earnings Orders
+                    reportType = "xml";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "PaymentDate";
+                    rptRef = "PSAEORUN";
                     url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
                         + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
                         + prm3 + "=" + startDate;                                       //Payment date
@@ -386,6 +398,11 @@ namespace PayRunIORunReports
                     break;
                 case "Note And Coin Requirement Report":
                     reportName = "NoteAndCoinRequirementReport";
+                    assemblyName = "PayRunIOClassLibrary";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    break;
+                case "Current Attachment Of Earnings Orders":
+                    reportName = "CurrentAttachmentOfEarningsOrders";
                     assemblyName = "PayRunIOClassLibrary";
                     xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
                     break;
@@ -595,6 +612,7 @@ namespace PayRunIORunReports
                     lblParameter4.Visible = true;
                     break;
                 case "Note And Coin Requirement Report":
+                case "Current Attachment Of Earnings Orders":
                     txtEditParameter1.Visible = true;
                     comboBoxChooseFrequency.Visible = true;
                     dateStartDate.Visible = true;

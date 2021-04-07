@@ -106,6 +106,7 @@
             "Aegon Pension Report",
             "Apprenticeship Levy Report",
             "Combined Payroll Run Report",
+            "Current Attachment Of Earnings Orders",
             "Department Within Branch Payroll Run Details Report",
             "EPS Report",
             "Note And Coin Requirement Report",
