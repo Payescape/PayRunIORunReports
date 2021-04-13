@@ -127,6 +127,10 @@ namespace PayRunIORunReports
                 //Employer number, frequency, payment date, tax year, pension key
                 case "PAPDIS Report":
                 case "Royal London Pension Report":
+                case "Friends Life Pension Report":
+                case "Standard Life Pension Report":
+                case "The Amber Pension Trust Report":
+                case "Scottish Widows Pension Report":
                 case "Now Pension Report":
                 case "Legal & General Pension Report":
                 case "Aegon Pension Report":
@@ -314,6 +318,10 @@ namespace PayRunIORunReports
                         + prm3 + "=" + txtEditParameter3.Text;                          //Tax Year
                     break;
                 default:
+                    //Friends Life Pension Report
+                    //Standard Life Pension Report
+                    //The Amber Pension Trust Report
+                    //Scottish Widows Pension Report
                     //Royal London Pension Report
                     //Now Pension Report
                     //Legal & General Pension Report
@@ -330,6 +338,18 @@ namespace PayRunIORunReports
                     string transformKey;
                     switch (comboBoxChooseReport.Text)
                     {
+                        case "Friends Life Pension Report":
+                            transformKey = "RL-PENSION-CSV"; //TODO change this to NOW-PENSION-CSV or whatever Tim calls it.
+                            break;
+                        case "Standard Life Pension Report":
+                            transformKey = "RL-PENSION-CSV"; //TODO change this to NOW-PENSION-CSV or whatever Tim calls it.
+                            break;
+                        case "The Amber Pension Trust Report":
+                            transformKey = "RL-PENSION-CSV"; //TODO change this to NOW-PENSION-CSV or whatever Tim calls it.
+                            break;
+                        case "Scottish Widows Pension Report":
+                            transformKey = "RL-PENSION-CSV"; //TODO change this to NOW-PENSION-CSV or whatever Tim calls it.
+                            break;
                         case "Royal London Pension Report":
                             transformKey = "RL-PENSION-CSV";
                             break;
@@ -472,6 +492,18 @@ namespace PayRunIORunReports
             {
                 case "Royal London Pension Report":
                     reportName = "RoyalLondonPensionReport";
+                    break;
+                case "Friends Life Pension Report":
+                    reportName = "FriendsLifePensionReport";
+                    break;
+                case "Standard Life Pension Report":
+                    reportName = "StandardLifePensionReport";
+                    break;
+                case "The Amber Pension Trust Report":
+                    reportName = "TheAmberPensionTrustReport";
+                    break;
+                case "Scottish Widows Pension Report":
+                    reportName = "ScottishWidowsPensionReport";
                     break;
                 case "Now Pension Report":
                     reportName = "NowPensionReport";
@@ -645,6 +677,10 @@ namespace PayRunIORunReports
                     break;
                 case "PAPDIS Report":
                 case "Royal London Pension Report":
+                case "Friends Life Pension Report":
+                case "Standard Life Pension Report":
+                case "The Amber Pension Trust Report":
+                case "Scottish Widows Pension Report":
                 case "Now Pension Report":
                 case "Legal & General Pension Report":
                 case "Aegon Pension Report":

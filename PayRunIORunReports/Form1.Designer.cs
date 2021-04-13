@@ -109,6 +109,7 @@
             "Current Attachment Of Earnings Orders",
             "Department Within Branch Payroll Run Details Report",
             "EPS Report",
+            "Friends Life Pension Report",
             "Note And Coin Requirement Report",
             "Legal & General Pension Report",
             "Now Pension Report",
@@ -118,8 +119,11 @@
             "Pension Contributions To Date Report",
             "Pre Report",
             "Royal London Pension Report",
+            "Scottish Widows Pension Report",
+            "Standard Life Pension Report",
             "Statutory Absence Report",
-            "Statutory Sick Pay Paid Report"});
+            "Statutory Sick Pay Paid Report",
+            "The Amber Pension Trust Report"});
             this.comboBoxChooseReport.Size = new System.Drawing.Size(482, 20);
             this.comboBoxChooseReport.TabIndex = 1;
             this.comboBoxChooseReport.SelectedValueChanged += new System.EventHandler(this.comboBoxChooseReport_SelectedValueChanged);
