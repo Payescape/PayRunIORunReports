@@ -147,6 +147,12 @@ namespace PayRunIORunReports
                         allEntered = false;
                     }
                     break;
+                case "P32 Report":
+                    if (txtEditParameter1.Text == "" || txtEditParameter2.Text == "" || btnEditSavePDFReports.Text == "")
+                    {
+                        allEntered = false;
+                    }
+                    break;
                 //Tax year, tax month
                 case "EPS Report":
                     if (txtEditParameter1.Text == "" || txtEditParameter2.Text == "" || btnEditSavePDFReports.Text == "")
@@ -297,6 +303,15 @@ namespace PayRunIORunReports
                         + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
                         + prm3 + "=" + txtEditParameter3.Text;                          //Tax Year
                     break;
+                case "P32 Report":
+                    //PSP32 - P32 report"
+                    reportType = "xml";
+                    prm1 = "EmployerKey";
+                    prm2 = "TaxYear";
+                    rptRef = "P32";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + txtEditParameter2.Text;                          //Tax Year
+                    break;
                 case "EPS Report":
                     //PSEPS - EPS Report"
                     reportType = "xml";
@@ -438,6 +453,11 @@ namespace PayRunIORunReports
                     break;
                 case "P11 Substitute":
                     reportName = "P11Substitute";
+                    assemblyName = "PayRunIOClassLibrary";
+                    xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
+                    break;
+                case "P32 Report":
+                    reportName = "P32Report";
                     assemblyName = "PayRunIOClassLibrary";
                     xtraReport = prWG.CreatePDFReport(xmlReport, reportName, assemblyName);
                     break;
@@ -666,6 +686,14 @@ namespace PayRunIORunReports
                     lblParameter1.Visible = true;
                     lblParameter2.Visible = true;
                     lblParameter3.Visible = true;
+                    break;
+                case "P32 Report":
+                    txtEditParameter1.Visible = true;
+                    txtEditParameter2.Visible = true;
+                    lblParameter1.Text = "Enter employer Number in the form nnnn.";
+                    lblParameter2.Text = "Enter tax year.";
+                    lblParameter1.Visible = true;
+                    lblParameter2.Visible = true;
                     break;
                 case "EPS Report":
                     txtEditParameter1.Visible = true;

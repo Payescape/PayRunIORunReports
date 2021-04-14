@@ -114,6 +114,7 @@
             "Legal & General Pension Report",
             "Now Pension Report",
             "P11 Substitute",
+            "P32 Report",
             "PAPDIS Report",
             "Pay Component Exception Report",
             "Pension Contributions To Date Report",
