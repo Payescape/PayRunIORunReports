@@ -177,6 +177,7 @@ namespace PayRunIORunReports
             string prm6 = null;
             string rptRef = null;
             string url = null;
+            bool joinerRequired = false;
             switch(comboBoxChooseReport.Text)
             {
                 case "Combined Payroll Run Report":
@@ -372,10 +373,12 @@ namespace PayRunIORunReports
                             transformKey = "RL-PENSION-CSV"; //TODO change this to NOW-PENSION-CSV or whatever Tim calls it.
                             break;
                         case "Legal & General Pension Report":
-                            transformKey = "RL-PENSION-CSV"; //TODO change this to LG-PENSION-CSV or whatever Tim calls it.
+                            transformKey = "LG-CONTRIBS-CSV";
+                            joinerRequired = true;
                             break;
                         case "Aegon Pension Report":
-                            transformKey = "RL-PENSION-CSV"; //TODO change this to AE-PENSION-CSV or whatever Tim calls it.
+                            transformKey = "AEGON-CONTRIBS-CSV";
+                            joinerRequired = true;
                             break;
                         default:
                             //PAPDIS report for Smart and maybe others.
@@ -392,6 +395,7 @@ namespace PayRunIORunReports
             }
             XmlDocument xmlReport;
             string txtReport;
+            
             switch (reportType)
             {
                 case "xml":
@@ -407,7 +411,15 @@ namespace PayRunIORunReports
                 default:
                     //text report
                     txtReport = GetTxtReport(rptRef, url);
-                    CreateTxtReports(txtReport);
+                    bool isJoiners = false;
+                    CreateTxtReports(txtReport, isJoiners);
+                    if(joinerRequired)
+                    {
+                        url = url.Replace("CONTRIBS-CSV", "JOINERS-CSV");
+                        isJoiners = true;
+                        txtReport = GetTxtReport(rptRef, url);
+                        CreateTxtReports(txtReport, isJoiners);
+                    }
                     break;
             }
             
@@ -504,42 +516,45 @@ namespace PayRunIORunReports
             workbook.Save();
             
         }
-        private void CreateTxtReports(string txtReport)
+        private void CreateTxtReports(string txtReport, bool isJoiners)
         {
             string reportName;
 
             switch(comboBoxChooseReport.Text)
             {
                 case "Royal London Pension Report":
-                    reportName = "RoyalLondonPensionReport";
+                    reportName = "RoyalLondonPensionContributionReport";
                     break;
                 case "Friends Life Pension Report":
-                    reportName = "FriendsLifePensionReport";
+                    reportName = "FriendsLifePensionContributionReport";
                     break;
                 case "Standard Life Pension Report":
-                    reportName = "StandardLifePensionReport";
+                    reportName = "StandardLifePensionContributionReport";
                     break;
                 case "The Amber Pension Trust Report":
-                    reportName = "TheAmberPensionTrustReport";
+                    reportName = "TheAmberPensionTrustContributionReport";
                     break;
                 case "Scottish Widows Pension Report":
-                    reportName = "ScottishWidowsPensionReport";
+                    reportName = "ScottishWidowsPensionContributionReport";
                     break;
                 case "Now Pension Report":
-                    reportName = "NowPensionReport";
+                    reportName = "NowPensionContributionReport";
                     break;
                 case "Legal & General Pension Report":
-                    reportName = "Legal&GeneralPensionReport";
+                    reportName = "Legal&GeneralPensionContributionReport";
                     break;
                 case "Aegon Pension Report":
-                    reportName = "AegonPensionReport";
+                    reportName = "AegonPensionContributionReport";
                     break;
                 default:
                     //PAPDIS report for Smart and maybe others.
-                    reportName = "PAPDISReport";
+                    reportName = "PAPDISPensionContributionReport";
                     break;
             }
-            
+            if(isJoiners)
+            {
+                reportName = reportName.Replace("ContributionReport", "JoinersReport");
+            }
             string docName = btnEditSavePDFReports.Text + "\\" + txtEditParameter1.Text + "_" + reportName + ".csv";
             SaveTxtReport(txtReport, docName);
         }
