@@ -105,6 +105,7 @@
             this.comboBoxChooseReport.Properties.Items.AddRange(new object[] {
             "Aegon Pension Report",
             "Apprenticeship Levy Report",
+            "Bottomline Bank Report",
             "Combined Payroll Run Report",
             "Current Attachment Of Earnings Orders",
             "Department Within Branch Payroll Run Details Report",
@@ -112,6 +113,7 @@
             "Friends Life Pension Report",
             "Note And Coin Requirement Report",
             "Legal & General Pension Report",
+            "Natwest Bank Report",
             "Now Pension Report",
             "P11 Substitute",
             "P32 Report",

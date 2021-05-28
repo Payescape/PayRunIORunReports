@@ -119,6 +119,8 @@ namespace PayRunIORunReports
                 //Employer number, frequency, payment date
                 case "Note And Coin Requirement Report":
                 case "Current Attachment Of Earnings Orders":
+                case "Bottomline Bank Report":
+                case "Natwest Bank Report":
                     if (txtEditParameter1.Text == "" || comboBoxChooseFrequency.Text == "" || dateStartDate.Text == "" || btnEditSavePDFReports.Text == "")
                     {
                         allEntered = false;
@@ -220,6 +222,18 @@ namespace PayRunIORunReports
                     prm2 = "PayScheduleKey";
                     prm3 = "PaymentDate";
                     rptRef = "PSAEORUN";
+                    url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
+                        + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
+                        + prm3 + "=" + startDate;                                       //Payment date
+                    break;
+                case "Bottomline Bank Report":
+                case "Natwest Bank Report":
+                    //PE-BankReport - Bank report
+                    reportType = "xlsx";
+                    prm1 = "EmployerKey";
+                    prm2 = "PayScheduleKey";
+                    prm3 = "PaymentDate";
+                    rptRef = "PE-BankFileReport";
                     url = prm1 + "=" + txtEditParameter1.Text + "&"                     //Employer
                         + prm2 + "=" + comboBoxChooseFrequency.Text + "&"               //Pay schedule
                         + prm3 + "=" + startDate;                                       //Payment date
@@ -509,9 +523,22 @@ namespace PayRunIORunReports
             string outgoingFolder = btnEditSavePDFReports.Text;
             string startDate = dateStartDate.Text.Replace('/', '.');
             string endDate = dateEndDate.Text.Replace('/', '.');
-            string workBookName = outgoingFolder + "\\" + coNo + "_PreReport(" + startDate + "-" + endDate + ").xlsx";
+            string workBookName;
+            PicoXLSX.Workbook workbook = null;
+            switch (comboBoxChooseReport.Text)
+            {
+                case "Pre Report":
+                    workBookName = outgoingFolder + "\\" + coNo + "_PreReport(" + startDate + "-" + endDate + ").xlsx";
+                    workbook = prWG.CreatePreReportWorkbook(xmlReport, workBookName);
+                    break;
+                case "Bottomline Bank Report":
+                    workBookName = outgoingFolder + "\\" + coNo + "_BottomlineBankReport.xlsx";
+                    workbook = prWG.CreateBottomlineReportWorkbook(xmlReport, workBookName);
+                    break;
+            }
+            
 
-            PicoXLSX.Workbook workbook = prWG.CreatePreReportWorkbook(xmlReport, workBookName);
+            
 
             workbook.Save();
             
@@ -680,6 +707,8 @@ namespace PayRunIORunReports
                     break;
                 case "Note And Coin Requirement Report":
                 case "Current Attachment Of Earnings Orders":
+                case "Bottomline Bank Report":
+                case "Natwest Bank Report":
                     txtEditParameter1.Visible = true;
                     comboBoxChooseFrequency.Visible = true;
                     dateStartDate.Visible = true;
